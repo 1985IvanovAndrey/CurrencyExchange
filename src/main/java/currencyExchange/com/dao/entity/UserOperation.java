@@ -3,7 +3,7 @@ package currencyExchange.com.dao.entity;
 import lombok.Data;
 
 @Data
-public class UserOperation {
+public class UserOperation implements Comparable<UserOperation> {
 
     private int id;
     private String nameUser;
@@ -15,7 +15,9 @@ public class UserOperation {
     private String status;
     private String date;
 
-    public UserOperation(String nameUser, String currency, String operation, double sumOperation, double rate, double outputAmount, String status, String date) {
+    public UserOperation(String nameUser, String currency, String operation,
+                         double sumOperation, double rate, double outputAmount,
+                         String status, String date) {
         this.nameUser = nameUser;
         this.currency = currency;
         this.operation = operation;
@@ -23,6 +25,20 @@ public class UserOperation {
         this.outputAmount = outputAmount;
         this.status = status;
         this.rate = rate;
+        this.date = date;
+    }
+
+    public UserOperation(int id, String nameUser, String currency,
+                         String operation, double sumOperation, double rate,
+                         double outputAmount, String status, String date) {
+        this.id = id;
+        this.nameUser = nameUser;
+        this.currency = currency;
+        this.operation = operation;
+        this.sumOperation = sumOperation;
+        this.rate = rate;
+        this.outputAmount = outputAmount;
+        this.status = status;
         this.date = date;
     }
 
@@ -80,5 +96,10 @@ public class UserOperation {
                 ", status='" + status + '\'' +
                 ", date='" + date + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(UserOperation userOperation) {
+        return nameUser.compareTo(userOperation.nameUser);
     }
 }

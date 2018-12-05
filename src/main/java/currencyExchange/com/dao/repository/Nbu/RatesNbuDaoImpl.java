@@ -19,6 +19,7 @@ import java.util.Scanner;
 public class RatesNbuDaoImpl implements RatesNbuDao {
     Connection connection = null;
 
+    @Override
     public List<RatesNbu> getCurrencyFromJsonNbu() throws IOException {
         List<RatesNbu> ratesNbuList = new ArrayList<>();
         URL url = new URL(" https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json");
@@ -33,18 +34,21 @@ public class RatesNbuDaoImpl implements RatesNbuDao {
         for (JsonNode jsonNode : nodes) {
             RatesNbu ratesNbu = new RatesNbu();
             if (jsonNode.get("cc").asText().equals("USD")) {
-                ratesNbu.setNameCurrency(jsonNode.get("cc").asText());
+                ratesNbu.setCcy(jsonNode.get("cc").asText());
                 ratesNbu.setRate(jsonNode.get("rate").asDouble());
+                ratesNbu.setBase_ccy("UAH");
                 ratesNbuList.add(ratesNbu);
             }
             if (jsonNode.get("cc").asText().equals("EUR")) {
-                ratesNbu.setNameCurrency(jsonNode.get("cc").asText());
+                ratesNbu.setCcy(jsonNode.get("cc").asText());
                 ratesNbu.setRate(jsonNode.get("rate").asDouble());
+                ratesNbu.setBase_ccy("UAH");
                 ratesNbuList.add(ratesNbu);
             }
             if (jsonNode.get("cc").asText().equals("RUB")) {
-                ratesNbu.setNameCurrency(jsonNode.get("cc").asText());
+                ratesNbu.setCcy(jsonNode.get("cc").asText());
                 ratesNbu.setRate(jsonNode.get("rate").asDouble());
+                ratesNbu.setBase_ccy("UAH");
                 ratesNbuList.add(ratesNbu);
             }
         }
@@ -58,9 +62,10 @@ public class RatesNbuDaoImpl implements RatesNbuDao {
             if (connection == null) {
                 connection = ConnectionToDB.myCreateConnection();
             }
-            statement = connection.prepareStatement("INSERT INTO rates_nbu(name_currency, rate) VALUES (?,?)");
-            statement.setString(1, ratesNbu.getNameCurrency());
-            statement.setDouble(2, ratesNbu.getRate());
+            statement = connection.prepareStatement("INSERT INTO rates_nbu(name_currency,base_ccy,rate) VALUES (?,?,?)");
+            statement.setString(1, ratesNbu.getCcy());
+            statement.setString(2, ratesNbu.getBase_ccy());
+            statement.setDouble(3, ratesNbu.getRate());
             statement.addBatch();
             statement.executeUpdate();
             statement.close();
@@ -77,7 +82,7 @@ public class RatesNbuDaoImpl implements RatesNbuDao {
         PreparedStatement pr = connection.prepareStatement(script);
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
-            ratesNbuList.add(new RatesNbu(rs.getInt(1), rs.getString(2), rs.getDouble(3)));
+            ratesNbuList.add(new RatesNbu(rs.getString(2), rs.getString(3), rs.getDouble(4)));
         }
         pr.close();
         rs.close();
@@ -85,6 +90,17 @@ public class RatesNbuDaoImpl implements RatesNbuDao {
         return ratesNbuList;
     }
 
+    @Override
+    public RatesNbu getJsonRateByCurrency(String currency) throws IOException {
+        List<RatesNbu> ratesNbuListList = getCurrencyFromJsonNbu();
+        RatesNbu ratesNbu = new RatesNbu();
+        for (RatesNbu nbu : ratesNbuListList) {
+            if (nbu.getCcy().toLowerCase().toLowerCase().equals(currency.toLowerCase())) {
+                ratesNbu = nbu;
+            }
+        }
+        return ratesNbu;
+    }
 }
 
 

@@ -6,7 +6,8 @@ import lombok.Data;
 public class RatesPrivat implements Comparable<RatesPrivat>{
 
     private int id;
-    private String nameCurrency;
+    private String ccy;
+    private String base_ccy;
     private Double sale;
     private Double buy;
 
@@ -14,21 +15,19 @@ public class RatesPrivat implements Comparable<RatesPrivat>{
     public RatesPrivat() {
     }
 
-    public RatesPrivat(int id, String nameCurrency, Double sale, Double buy) {
-        this.id = id;
-        this.nameCurrency = nameCurrency;
+    public RatesPrivat(String ccy, String base_ccy, Double sale, Double buy) {
+        this.ccy = ccy;
+        this.base_ccy = base_ccy;
         this.sale = sale;
         this.buy = buy;
     }
 
-    @Override
-    public String toString() {
-        return "RatesPrivat{" +
-                "id=" + id +
-                ", nameCurrency='" + nameCurrency + '\'' +
-                ", sale='" + sale + '\'' +
-                ", buy='" + buy + '\'' +
-                '}';
+    public RatesPrivat(int id, String ccy, String base_ccy, Double sale, Double buy) {
+        this.id = id;
+        this.ccy = ccy;
+        this.base_ccy = base_ccy;
+        this.sale = sale;
+        this.buy = buy;
     }
 
     @Override
@@ -37,27 +36,39 @@ public class RatesPrivat implements Comparable<RatesPrivat>{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        RatesPrivat RatesPrivat = (RatesPrivat) o;
+        RatesPrivat that = (RatesPrivat) o;
 
-        if (id != RatesPrivat.id) return false;
-        if (nameCurrency != null ? !nameCurrency.equals(RatesPrivat.nameCurrency) : RatesPrivat.nameCurrency != null)
-            return false;
-        if (sale != null ? !sale.equals(RatesPrivat.sale) : RatesPrivat.sale != null) return false;
-        return buy != null ? buy.equals(RatesPrivat.buy) : RatesPrivat.buy == null;
+        if (id != that.id) return false;
+        if (ccy != null ? !ccy.equals(that.ccy) : that.ccy != null) return false;
+        if (base_ccy != null ? !base_ccy.equals(that.base_ccy) : that.base_ccy != null) return false;
+        if (sale != null ? !sale.equals(that.sale) : that.sale != null) return false;
+        return buy != null ? buy.equals(that.buy) : that.buy == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + id;
-        result = 31 * result + (nameCurrency != null ? nameCurrency.hashCode() : 0);
+        result = 31 * result + (ccy != null ? ccy.hashCode() : 0);
+        result = 31 * result + (base_ccy != null ? base_ccy.hashCode() : 0);
         result = 31 * result + (sale != null ? sale.hashCode() : 0);
         result = 31 * result + (buy != null ? buy.hashCode() : 0);
         return result;
     }
 
     @Override
+    public String toString() {
+        return "RatesPrivat{" +
+                "id=" + id +
+                ", ccy='" + ccy + '\'' +
+                ", base_ccy='" + base_ccy + '\'' +
+                ", sale=" + sale +
+                ", buy=" + buy +
+                '}';
+    }
+
+    @Override
     public int compareTo(RatesPrivat ratesPrivat) {
-        return nameCurrency.compareTo(ratesPrivat.nameCurrency);
+        return ccy.compareTo(ratesPrivat.ccy);
     }
 }

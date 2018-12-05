@@ -5,4 +5,6 @@ import java.sql.SQLException;
 public interface RatesNbuService {
     void createTableRatesNbuInDB() throws SQLException;
 
+
+
 }

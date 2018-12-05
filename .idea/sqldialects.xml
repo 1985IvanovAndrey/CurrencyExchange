@@ -3,7 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/currencyExchange/com/dao/repository/Nbu/RatesNbuDaoImpl.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/currencyExchange/com/dao/repository/Privat/RatesPrivatDaoImpl.java" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/1.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/insertToTableRatesNbu.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/currencyExchange/com/dao/repository/user/UserOperationDaoImpl.java" dialect="PostgreSQL" />
   </component>
 </project>

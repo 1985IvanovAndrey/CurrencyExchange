@@ -25,11 +25,16 @@
 
 <div class="alert alert-success" role="alert">
     <div align="center"><h2>Добро пожаловать в кассу обмена валют!</h2></div>
+    <div align="right">
+        <form action="/admin">
+            <input class=" btn btn-outline-primary btn-sm" type="submit" value="Admin page">
+        </form>
+    </div>
 </div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-sm-5">
-            <h2>Курсы валют ПриватБанка</h2>
+        <div class="col-sm-4">
+            <h3>Курсы валют ПриватБанка</h3>
             <div class="table-responsive">
                 <thead class="thead-light">
                 <table class="table table-bordered">
@@ -42,7 +47,7 @@
                     </thead>
                     <c:forEach items="${ratesPrivatList}" var="privat">
                         <tr>
-                            <td>${privat.nameCurrency}</td>
+                            <td>${privat.ccy}</td>
                             <td>${privat.sale}</td>
                             <td>${privat.buy}</td>
                         </tr>
@@ -50,8 +55,10 @@
                 </table>
             </div>
         </div>
-        <div class="col-sm-5">
-            <h2>Курсы валют НБУ</h2>
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-3">
+            <h3>Курсы валют НБУ</h3>
             <div class="table-responsive">
                 <thead class="thead-light">
                 <table class="table table-bordered">
@@ -63,7 +70,7 @@
                     </thead>
                     <c:forEach items="${ratesNbuList}" var="nbu">
                         <tr>
-                            <td>${nbu.nameCurrency}</td>
+                            <td>${nbu.ccy}</td>
                             <td>${nbu.rate}</td>
                         </tr>
                     </c:forEach>
@@ -71,37 +78,73 @@
             </div>
         </div>
     </div>
-    <h2>Введите Ваше имя,выберите вид операции, валюту и введите сумму:</h2>
+</div>
+<div class="container-fluid">
     <div class="row">
-        <div class="table">
-            <table class="table table-bordered">
-                <tr>
-                    <th>
-                        <form action="/operation" method="get">
-                            <div class="form-group mb-2">
-                                <label for="name" class="col-form-label-sm">Name</label>
-                                <input type="text" class="form-control col-form-label-sm" id="name" name="name"
-                                       placeholder="Enter name">
-                            </div>
-                            <select name="operation">
-                                <option>sale</option>
-                                <option>buy</option>
-                            </select>
-                            <select name="currency">
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>RUR</option>
-                            </select>
-                            <div class="form-group mb-2">
-                                <label for="sum" class="col-form-label-sm">Сумма</label>
-                                <input type="text" class="form-control col-form-label-sm" id="sum" name="sum"
-                                       placeholder="Enter sum">
-                            </div>
-                            <input class=" btn btn-outline-primary btn-sm mb-2" type="submit" value="Enter">
-                        </form>
-                    </th>
-                </tr>
-            </table>
+        <div class="col-sm-4">
+            <h3>Введите данные:</h3>
+            <div class="table">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            <form action="/operation" method="get">
+                                <div class="form-group mb-2">
+                                    <label for="name" class="col-form-label-sm">Name</label>
+                                    <input type="text" class="form-control col-form-label-sm" id="name" name="name"
+                                           placeholder="Enter name">
+                                </div>
+                                <select name="operation">
+                                    <option>sale</option>
+                                    <option>buy</option>
+                                </select>
+                                <select name="currency">
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>RUR</option>
+                                </select>
+                                <div class="form-group mb-2">
+                                    <label for="sum" class="col-form-label-sm">Сумма</label>
+                                    <input type="text" class="form-control col-form-label-sm" id="sum" name="sum"
+                                           placeholder="Enter sum">
+                                </div>
+                                <input class=" btn btn-outline-primary btn-sm mb-2" type="submit" value="Enter">
+                            </form>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <c:if test="${!empty allOperation}">
+                <h3>Просмотр журнала операций:</h3>
+                <div class="table-responsive">
+                    <thead class="thead-light">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Currency</th>
+                            <th>Operation</th>
+                            <th>Sum</th>
+                            <th>Rate</th>
+                            <th>Sum_UAH</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <c:forEach items="${allOperation}" var="operation">
+                            <tr>
+                                <td>${operation.nameUser}</td>
+                                <td>${operation.currency}</td>
+                                <td>${operation.operation}</td>
+                                <td>${operation.sumOperation}</td>
+                                <td>${operation.rate}</td>
+                                <td>${operation.outputAmount}</td>
+                                <td>${operation.date}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>

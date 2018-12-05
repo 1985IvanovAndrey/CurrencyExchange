@@ -14,6 +14,7 @@ public class RatesNbuServiceImpl implements RatesNbuService {
             "(\n" +
             "  id            SERIAL NOT NULL,\n" +
             "  name_currency VARCHAR(25),\n" +
+            "  base_ccy VARCHAR(25),\n" +
             "  rate          DOUBLE PRECISION\n" +
             ");";
 
