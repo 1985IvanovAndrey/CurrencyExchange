@@ -46,6 +46,7 @@ public class RatesPrivatDaoImpl implements RatesPrivatDao {
         return ratesPrivatList;
     }
 
+    @Override
     public void saveCurrencyFromJsonPrivat() throws SQLException, IOException {
         PreparedStatement statement;
         List<RatesPrivat> ratesPrivatList = getCurrencyFromJsonPrivat();
@@ -74,7 +75,7 @@ public class RatesPrivatDaoImpl implements RatesPrivatDao {
         PreparedStatement pr = connection.prepareStatement(script);
         ResultSet rs = pr.executeQuery();
         while (rs.next()) {
-            ratesPrivatList.add(new RatesPrivat(rs.getString(2),rs.getString(3), rs.getDouble(4), rs.getDouble(5)));
+            ratesPrivatList.add(new RatesPrivat(rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getDouble(5)));
         }
         pr.close();
         rs.close();

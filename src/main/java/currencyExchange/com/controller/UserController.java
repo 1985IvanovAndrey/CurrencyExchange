@@ -3,7 +3,7 @@ package currencyExchange.com.controller;
 import currencyExchange.com.dao.repository.Nbu.RatesNbuDao;
 import currencyExchange.com.dao.repository.Privat.RatesPrivatDao;
 import currencyExchange.com.dao.repository.user.UserOperationDao;
-import currencyExchange.com.services.userService.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,8 @@ import java.sql.SQLException;
 @Controller
 @RequestMapping("/")
 public class UserController {
+    private static final Logger logger = Logger.getLogger(UserController.class);
+
     @Autowired
     private RatesPrivatDao ratesPrivatDao;
     @Autowired
@@ -28,9 +30,12 @@ public class UserController {
     @GetMapping
     public String getAllGroups(Model model) throws SQLException, IOException {
         model.addAttribute("ratesNbuList", ratesNbuDao.getRatesNbuFromDB());
+        logger.info("Выведены курсы НБУ");
         model.addAttribute("ratesPrivatList", ratesPrivatDao.getRatesPrivatFromDB());
+        logger.info("Выведены курсы Привата");
         model.addAttribute("allOperation", userOperationDao.checkStatus(userOperationDao.getAllOperationFromDB()));
         ratesNbuDao.getRatesNbuFromDB();
+
         return "index";
     }
 
@@ -41,6 +46,7 @@ public class UserController {
                                    @RequestParam(value = "sum") Double sum) throws SQLException {
         if (!name.equals("") && sum != null) {
             userOperationDao.saveOperationInDB(operation, sum, name, currency);
+            logger.info("Совершена операция");
         }
         return "redirect:/";
     }

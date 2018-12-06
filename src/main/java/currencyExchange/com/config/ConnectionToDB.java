@@ -1,6 +1,9 @@
 package currencyExchange.com.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +15,7 @@ public class ConnectionToDB {
     private static String PASSWORD = "postgres";
     private static String driverName = "org.postgresql.Driver";
     private static Connection connection;
+
 
     public static Connection myCreateConnection() {
         connection = null;

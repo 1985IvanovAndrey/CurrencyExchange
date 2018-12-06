@@ -55,6 +55,7 @@ public class RatesNbuDaoImpl implements RatesNbuDao {
         return ratesNbuList;
     }
 
+    @Override
     public void saveCurrencyFromJsonNbu() throws SQLException, IOException {
         PreparedStatement statement;
         List<RatesNbu> ratesNbuList = getCurrencyFromJsonNbu();

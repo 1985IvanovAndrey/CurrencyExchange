@@ -38,6 +38,5 @@ public class InitToDB {
         ratesPrivatDao.saveCurrencyFromJsonPrivat();
 
         userService.createTableUserOperation();
-
     }
 }
